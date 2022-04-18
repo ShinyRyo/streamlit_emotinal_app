@@ -20,8 +20,8 @@ if img_source == "画像をアップロード":
 elif img_source == "カメラで撮影":
     img_file = st.camera_input("カメラで撮影")
 
-# # IEコアの初期化
-# ie = IECore()
+# IEコアの初期化
+ie = IECore()
 
 # #モデルの準備（顔検出） 
 # model_face = 'intel/face-detection-retail-0004/FP32/face-detection-retail-0004.xml'
