@@ -57,59 +57,59 @@ out = exec_net_face.infer(inputs={input_blob_face: img})
 out = out[out_blob_face]
 out = np.squeeze(out) #サイズ1の次元を全て削除 
 
-# 検出されたすべての顔領域に対して１つずつ処理 
-for detection in out:
-    # conf値の取得 
-    confidence = float(detection[2])
+# # 検出されたすべての顔領域に対して１つずつ処理 
+# for detection in out:
+#     # conf値の取得 
+#     confidence = float(detection[2])
 
-    # バウンディングボックス座標を入力画像のスケールに変換 
-    xmin = int(detection[3] * frame.shape[1])
-    ymin = int(detection[4] * frame.shape[0])
-    xmax = int(detection[5] * frame.shape[1])
-    ymax = int(detection[6] * frame.shape[0])
+#     # バウンディングボックス座標を入力画像のスケールに変換 
+#     xmin = int(detection[3] * frame.shape[1])
+#     ymin = int(detection[4] * frame.shape[0])
+#     xmax = int(detection[5] * frame.shape[1])
+#     ymax = int(detection[6] * frame.shape[0])
 
-    # conf値が0.5より大きい場合のみバウンディングボックス表示 
-    if confidence > 0.5:
-           # 顔検出領域はカメラ範囲内に補正する。特にminは補正しないとエラーになる 
-            if xmin < 0:
-                xmin = 0
-            if ymin < 0:
-                ymin = 0
-            if xmax > frame.shape[1]:
-                xmax = frame.shape[1]
-            if ymax > frame.shape[0]:
-                ymax = frame.shape[0]
+#     # conf値が0.5より大きい場合のみバウンディングボックス表示 
+#     if confidence > 0.5:
+#            # 顔検出領域はカメラ範囲内に補正する。特にminは補正しないとエラーになる 
+#             if xmin < 0:
+#                 xmin = 0
+#             if ymin < 0:
+#                 ymin = 0
+#             if xmax > frame.shape[1]:
+#                 xmax = frame.shape[1]
+#             if ymax > frame.shape[0]:
+#                 ymax = frame.shape[0]
  
-            # 顔領域のみ切り出し 
-            frame_face = frame[ ymin:ymax, xmin:xmax ]
+#             # 顔領域のみ切り出し 
+#             frame_face = frame[ ymin:ymax, xmin:xmax ]
  
-            # 入力データフォーマットへ変換 
-            img = np.resize(frame,(64,64,3))
-            img = img.transpose((2, 0, 1))    # HWC > CHW 
-            img = np.expand_dims(img, axis=0) # 次元合せ 
+#             # 入力データフォーマットへ変換 
+#             img = np.resize(frame,(64,64,3))
+#             img = img.transpose((2, 0, 1))    # HWC > CHW 
+#             img = np.expand_dims(img, axis=0) # 次元合せ 
  
-            # 推論実行 
-            out = exec_net_emotion.infer({input_blob_emotion: img})
+#             # 推論実行 
+#             out = exec_net_emotion.infer({input_blob_emotion: img})
  
-            # 出力から必要なデータのみ取り出し 
-            out = out[out_blob_emotion]
-            out = np.squeeze(out) #不要な次元の削減 
+#             # 出力から必要なデータのみ取り出し 
+#             out = out[out_blob_emotion]
+#             out = np.squeeze(out) #不要な次元の削減 
  
-            # 出力値が最大のインデックスを得る 
-            index_max = np.argmax(out)
+#             # 出力値が最大のインデックスを得る 
+#             index_max = np.argmax(out)
  
-            # 各感情の文字列をリスト化 
-            list_emotion = ['neutral', 'happy', 'sad', 'surprise', 'anger']
+#             # 各感情の文字列をリスト化 
+#             list_emotion = ['neutral', 'happy', 'sad', 'surprise', 'anger']
  
-            # バウンディングボックス表示 
-            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), color=(240, 180, 0), thickness=3)
+#             # バウンディングボックス表示 
+#             cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), color=(240, 180, 0), thickness=3)
 
-            # 文字列描画 
-            cv2.putText(frame, list_emotion[index_max], (300, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2) 
+#             # 文字列描画 
+#             cv2.putText(frame, list_emotion[index_max], (300, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2) 
  
-            # １つの顔で終了 
-            break
+#             # １つの顔で終了 
+#             break
 
-# 画像表示
-fig, ax = plt.subplots()
-ax.imshow(frame)
+# # 画像表示
+# fig, ax = plt.subplots()
+# ax.imshow(frame)
