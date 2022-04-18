@@ -1,7 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 from PIL import Image
-from model import predict
 import requests
 import os.path
 import numpy as np
