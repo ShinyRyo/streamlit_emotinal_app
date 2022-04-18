@@ -20,42 +20,42 @@ if img_source == "画像をアップロード":
 elif img_source == "カメラで撮影":
     img_file = st.camera_input("カメラで撮影")
 
-# IEコアの初期化
-ie = IECore()
+# # IEコアの初期化
+# ie = IECore()
 
-#モデルの準備（顔検出） 
-model_face = 'intel/face-detection-retail-0004/FP32/face-detection-retail-0004.xml'
-weights_face = 'intel/face-detection-retail-0004/FP32/face-detection-retail-0004.bin'
+# #モデルの準備（顔検出） 
+# model_face = 'intel/face-detection-retail-0004/FP32/face-detection-retail-0004.xml'
+# weights_face = 'intel/face-detection-retail-0004/FP32/face-detection-retail-0004.bin'
 
-#モデルの準備（感情分類） 
-model_emotion = 'intel/emotions-recognition-retail-0003/FP32/emotions-recognition-retail-0003.xml'
-weights_emotion = 'intel/emotions-recognition-retail-0003/FP32/emotions-recognition-retail-0003.bin'
+# #モデルの準備（感情分類） 
+# model_emotion = 'intel/emotions-recognition-retail-0003/FP32/emotions-recognition-retail-0003.xml'
+# weights_emotion = 'intel/emotions-recognition-retail-0003/FP32/emotions-recognition-retail-0003.bin'
 
-# モデルの読み込み（顔検出） 
-net_face = ie.read_network(model=model_face, weights=weights_face)
-exec_net_face = ie.load_network(network=net_face, device_name='CPU')
+# # モデルの読み込み（顔検出） 
+# net_face = ie.read_network(model=model_face, weights=weights_face)
+# exec_net_face = ie.load_network(network=net_face, device_name='CPU')
 
-# モデルの読み込み（感情分類） 
-net_emotion = ie.read_network(model=model_emotion, weights=weights_emotion)
-exec_net_emotion = ie.load_network(network=net_emotion, device_name='CPU')
+# # モデルの読み込み（感情分類） 
+# net_emotion = ie.read_network(model=model_emotion, weights=weights_emotion)
+# exec_net_emotion = ie.load_network(network=net_emotion, device_name='CPU')
 
-# 入出力データのキー取得 
-input_blob_face = next(iter(net_face.input_info))
-out_blob_face = next(iter(net_face.outputs))
+# # 入出力データのキー取得 
+# input_blob_face = next(iter(net_face.input_info))
+# out_blob_face = next(iter(net_face.outputs))
 
-input_blob_emotion = next(iter(net_emotion.input_info))
-out_blob_emotion = next(iter(net_emotion.outputs))
+# input_blob_emotion = next(iter(net_emotion.input_info))
+# out_blob_emotion = next(iter(net_emotion.outputs))
 
-frame = Image.open(img_file)
-frame = np.array(frame, dtype=np.uint8)
-img = read_img(img_file)
+# frame = Image.open(img_file)
+# frame = np.array(frame, dtype=np.uint8)
+# img = read_img(img_file)
 
-# 推論実行 
-out = exec_net_face.infer(inputs={input_blob_face: img})
+# # 推論実行 
+# out = exec_net_face.infer(inputs={input_blob_face: img})
 
-# 出力から必要なデータのみ取り出し 
-out = out[out_blob_face]
-out = np.squeeze(out) #サイズ1の次元を全て削除 
+# # 出力から必要なデータのみ取り出し 
+# out = out[out_blob_face]
+# out = np.squeeze(out) #サイズ1の次元を全て削除 
 
 # # 検出されたすべての顔領域に対して１つずつ処理 
 # for detection in out:
