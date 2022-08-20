@@ -1,9 +1,9 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-from PIL import Image
-import requests
-import os.path
-import numpy as np
+# import matplotlib.pyplot as plt
+# from PIL import Image
+# import requests
+# import os.path
+# import numpy as np
 from openvino.inference_engine import IECore
 
 st.set_option("deprecation.showfileUploaderEncoding", False)
